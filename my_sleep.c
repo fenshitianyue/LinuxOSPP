@@ -4,7 +4,9 @@
 
 
 void sig_alrm(int signo){
-
+  if(14 == signo){
+    //do_something
+  }
 }
 
 size_t mysleep(size_t nsecs){

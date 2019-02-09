@@ -10,16 +10,16 @@ void sig_function(int signo){
 }
 
 size_t mysleep(size_t nsecs){
-  struct sigaction new, old;
+  struct sigaction newact, oldact;
   size_t unslept = 0;
-  new.sa_handler = sig_function;
-  sigemptyset(&new.sa_mask);
-  new.sa_flags = 0;
-  sigaction(SIGALRM, &new, &old);
+  newact.sa_handler = sig_function;
+  sigemptyset(&newact.sa_mask);
+  newact.sa_flags = 0;
+  sigaction(SIGALRM, &newact, &oldact);
   alarm(nsecs);
   pause();
   unslept = alarm(0);
-  sigaction(SIGALRM, &old, NULL);
+  sigaction(SIGALRM, &oldact, NULL);
   return unslept;
 }
 

@@ -4,7 +4,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-typedef enum{TRUE, FALSE} _bool;
+typedef enum{FALSE, TRUE} _bool;
 
 _bool daemonize(){
   pid_t pid = fork();

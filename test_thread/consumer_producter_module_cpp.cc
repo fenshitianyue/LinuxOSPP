@@ -76,8 +76,7 @@ public:
   //}
 };
 
-void consumer(void* arg){
-  BlockQueue* b = (BlockQueue*)arg;
+void consumer(BlockQueue* b){
   int data;
   while(true){
     b->PopData(data);
@@ -85,8 +84,7 @@ void consumer(void* arg){
   }
 }
 
-void producter(void* arg){
-  BlockQueue* b = (BlockQueue*)arg;
+void producter(BlockQueue* b){
   srand((unsigned long)time(NULL));
   while(true){
     int data = rand() % 1024;
@@ -101,8 +99,8 @@ int main(){
   //pthread_t c, p;
   //pthread_create(&c, NULL, consumer, (void*)&b);
   //pthread_create(&p, NULL, producter, (void*)&b);
-  std::thread c(consumer, (void*)&b);
-  std::thread p(producter, (void*)&b);
+  std::thread c(consumer, &b);
+  std::thread p(producter, &b);
 
   //pthread_join(c, NULL);
   //pthread_join(p, NULL);

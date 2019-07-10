@@ -5,6 +5,8 @@
 #include <pthread.h>
 
 #define NUM 8
+#define CONSUMER_COUNT 2
+#define PRODUCTER_COUNT 2
 
 class BlockQueue{
 private:
@@ -74,6 +76,8 @@ public:
   }
 };
 
+pthread_t threads[CONSUMER_COUNT + PRODUCTER_COUNT];
+
 void* consumer(void* arg){
   BlockQueue* b = (BlockQueue*)arg;
   int data;
@@ -96,11 +100,15 @@ void* producter(void* arg){
 
 int main(){
   BlockQueue b;
-  pthread_t c, p;
-  pthread_create(&c, NULL, consumer, (void*)&b);
-  pthread_create(&p, NULL, producter, (void*)&b);
+  for(int i = 0; i != CONSUMER_COUNT; ++i){
+    pthread_create(&threads[i], NULL, consumer, (void*)&b);
+  }
+  for(int i = 0; i != PRODUCTER_COUNT; ++i){
+    pthread_create(&threads[CONSUMER_COUNT + i], NULL, producter, (void*)&b);
+  }
 
-  pthread_join(c, NULL);
-  pthread_join(p, NULL);
+  for(int i = 0; i != (CONSUMER_COUNT + PRODUCTER_COUNT); ++i){
+    pthread_join(threads[i], NULL);
+  }
   return 0;
 }

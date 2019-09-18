@@ -29,23 +29,17 @@ code_type=$2
 
 option=""
 
-if test ${code_type} = "-c"
-then 
+if [ ${code_type} = "-c" ]; then
   option="*.c"
-elif test ${code_type} = "-cc"
-then
+elif [ ${code_type} = "-cc" ]; then
   option="*.cc"
-elif test ${code_type} = "-h"
-then
+elif [ ${code_type} = "-h" ]; then
   option="*.h"
-elif test ${code_type} = "-p"
-then
+elif [ ${code_type} = "-p" ]; then
   option="*.py"
-elif test ${code_type} = "-g"
-then
+elif [ ${code_type} = "-g" ]; then
   option="*.go"
-elif test ${code_type} = "-j"
-then
+elif [ ${code_type} = "-j" ]; then
   option="*.java"
 else 
   echo "检查选项是否支持！"

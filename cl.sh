@@ -15,7 +15,6 @@
 #    -h:   C/C++语言头文件代码
 #    -p:   Python语言代码
 #    -g:   Go语言代码
-#    -sh:  Shell语言代码
 #    -j:   Java语言代码
 #
 #作者:aideny
@@ -45,9 +44,6 @@ then
 elif test ${code_type} = "-g"
 then
   option="*.go"
-elif test ${code_type} = "-sh"
-then
-  option="*.sh"
 elif test ${code_type} = "-j"
 then
   option="*.java"
@@ -56,11 +52,15 @@ else
   exit 1
 fi
 
+echo "开始统计..."
+
 # 进行统计
 if test -z ${path}
 then
-  echo "Usage: ./cl.sh [filepath]"
+  echo "Usage: ./cl.sh [filepath][option]"
 else 
-  wc -l `find ${path} -name ${option}` | tail -n1
+  # 这个方法如果找不到指定语言的代码，会卡住
+  # wc -l `find ${path} -name ${option}` | tail -n1
+  find ${path} -name ${option} | xargs wc -l | tail -n1
 fi
 
